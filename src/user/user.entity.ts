@@ -7,7 +7,7 @@ export class UserEntity{
     @PrimaryGeneratedColumn()
     id: number;
 
-       @Column()
+    @Column()
     email: string;
 
     @Column({default: ""})
@@ -18,6 +18,9 @@ export class UserEntity{
 
     @Column()
     username: string;
+
+    @Column()
+    pronouns: string;
 
     @Column()
     password: string;

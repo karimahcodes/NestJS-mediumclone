@@ -1,8 +1,11 @@
 import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
 import { CreateUserDto } from "./dto/createUser.dto";
 import { UserEntity } from "./user.entity";
-import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
+import { sign } from "jsonwebtoken";
+import { JWT_Secret } from "@app/config";
+
 
 @Injectable()
 export class UserService {
@@ -19,7 +22,13 @@ export class UserService {
     }
 
     generateJwt(user: UserEntity): string {
-        return 'foo';
+        return sign({
+            id: user.id,
+            username: user.username,
+            email: user.email
+        },
+        JWT_Secret,
+    );
     }
 //JWT is a string so we want to return a type string
 
