@@ -5,6 +5,7 @@ import { UserEntity } from "./user.entity";
 import { Repository } from "typeorm";
 import { sign } from "jsonwebtoken";
 import { JWT_Secret } from "@app/config";
+import { UserReponseInterface } from "./types/userResponse.interface";
 
 
 @Injectable()
@@ -30,15 +31,17 @@ export class UserService {
         JWT_Secret,
     );
     }
+
 //JWT is a string so we want to return a type string
 
     //build response for your front end
-    buildUserResponse(user: UserEntity): any{
+    buildUserResponse(user: UserEntity): UserReponseInterface {
         return{
             user: {
                 ...user,
                 token: this.generateJwt(user)
                 //sends back a user object with all of the properties of the original user object and adds a jwt token to the response body
+                //we want a password but it's been hashed (hashing is a type) so we must create a new data type in order to receive it with the userEntity object
             }
         }
     }
