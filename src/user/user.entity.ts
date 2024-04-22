@@ -22,7 +22,7 @@ export class UserEntity{
     @Column()
     pronouns: string;
 
-    @Column()
+    @Column({default:""})
     password: string;
     @BeforeInsert()
     async hashPassword(){
