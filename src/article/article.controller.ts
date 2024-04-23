@@ -1,10 +1,13 @@
-import { Controller } from "@nestjs/common";
-import { Post } from "@nestjs/common";
+import { Controller, Post } from "@nestjs/common";
+import { ArticleService } from "./article.service";
 
 @Controller('articles')
 export class ArticleController{
+    
+    constructor(private readonly articleService: ArticleService) {}
+    
     @Post()
     async create(){
-        return 'Create article;'
+        return this.articleService.createArticle()
     }
 }
