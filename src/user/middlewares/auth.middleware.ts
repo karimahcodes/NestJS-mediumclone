@@ -7,3 +7,6 @@ export class AuthMiddleware implements NestMiddleware{
         next();
     }
 }
+
+//we must implement something(NestMiddleware) that NestJS wants from us
+//Middleware requires use() function and throws an error until you add it

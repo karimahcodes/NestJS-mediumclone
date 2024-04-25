@@ -1,13 +1,18 @@
-import { Controller, Post } from "@nestjs/common";
-import { ArticleService } from "./article.service";
+// import { Controller, Post, UseGuards } from "@nestjs/common";
+// import { ArticleService } from "./article.service";
+// import { AuthGuard} from "@app/user/guards/auth.guard";
+// import { CreateArticleDto } from "./dto/createArticle.dto";
 
-@Controller('articles')
-export class ArticleController{
+// @Controller('articles')
+// export class ArticleController{
     
-    constructor(private readonly articleService: ArticleService) {}
+//     constructor(private readonly articleService: ArticleService) {}
     
-    @Post()
-    async create(){
-        return this.articleService.createArticle()
-    }
-}
+//     @Post()
+//     @UseGuards(AuthGuard)
+//     async create(@User('id') currentUserId: number, @Body('article') createArticleDto){
+//         return await this.articleService.createArticle(currentUserId,createArticleDto);
+//     }
+// }
+
+// //when we're creating an article we on need to extract the ID from the user
