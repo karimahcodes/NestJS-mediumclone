@@ -1,5 +1,6 @@
-import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import {hash} from "bcrypt";
+import { ArticleEntity } from "@app/article/article.entity";
 
 @Entity({name: 'users'})
 export class UserEntity{
@@ -24,8 +25,16 @@ export class UserEntity{
 
     @Column({default:""})
     password: string;
+
     @BeforeInsert()
     async hashPassword(){
         this.password = await hash(this.password, 10)
     }
+
+    @OneToMany(()=>ArticleEntity, (article) => article.author) 
+    articles: ArticleEntity[];
+
 }
+
+// @OneToMany(()=>ArticleEntity) says our user can have multiple articleEntities
+//(article) => article.author allows us to pull out the author property from every article

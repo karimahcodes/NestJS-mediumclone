@@ -4,6 +4,8 @@ import { UserService } from "@app/user/user.service";
 import { CreateUserDto } from "./dto/createUser.dto";
 // import { UserEntity } from "./user.entity";
 import { UserReponseInterface } from "./types/userResponse.interface";
+import { Request } from "express";
+
 
 @Controller()
 export class UserController{
