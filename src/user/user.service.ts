@@ -51,11 +51,11 @@ export class UserService {
         return{
             user: {
                 ...user,
-                token: this.generateJwt(user)
+                token: this.generateJwt(user),
                 //sends back a user object with all of the properties of the original user object and adds a jwt token to the response body
                 //we want a password but it's been hashed (hashing is a type) so we must create a new data type in order to receive it with the userEntity object
-            }
-        }
+            },
+        };
     }
 }
 
