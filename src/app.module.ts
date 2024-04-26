@@ -27,4 +27,4 @@ export class AppModule {
   }
 }
 
-//apply AuthMiddleware globally by specifying that it is applied for all routes and request methods in your app
+//consumer.apply(AuthMiddleware).forRoutes({  path: '*',  method: RequestMethod.ALL,}) - apply AuthMiddleware globally by specifying that it is applied for all routes and request methods in your app

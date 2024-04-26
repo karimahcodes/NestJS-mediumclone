@@ -22,7 +22,7 @@ export class UserController{
 
     @Get('user')
     async currentUser(@Req() request: Request): Promise<UserReponseInterface>{
-        console.log('request', request);
+        
         return 'currentUser' as any;
     }
 }  
