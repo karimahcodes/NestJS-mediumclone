@@ -1,17 +1,21 @@
 import { JWT_Secret } from "@app/config";
 import { ExpressRequest } from "@app/types/expressRequest.interface";
-import { NestMiddleware } from "@nestjs/common";
+import { Injectable, NestMiddleware } from "@nestjs/common";
 import { NextFunction, Response } from "express";
 import {verify} from 'jsonwebtoken';
+import { UserService } from "../user.service";
 
 
 //4-26-24 2:234pm unable to resolve error when this request for auth headers is placed in postman.
 
-
+@Injectable() //always include for services and middlewares
 export class AuthMiddleware implements NestMiddleware{
-    async use(req: ExpressRequest, res: Response, next: NextFunction){
+
+    constructor(private readonly userService: UserService){}
+
+    async use(req: ExpressRequest, _: Response, next: NextFunction){
         
-        console.log('authMiddle', req.headers);
+        // console.log('authMiddle', req.headers);
         if (!req.headers.authorization){
             req.user = null;
             next();
@@ -25,14 +29,15 @@ export class AuthMiddleware implements NestMiddleware{
         //if token is invalid we'll get an error without try catch statement
         try{
             const decode = verify(token, JWT_Secret);
-            console.log('decode', decode);
+            const user = await this.userService.findById(decode.id); //finds the User by id from the token in the DB
+            req.user = user;
+            // console.log('decode', decode);
             next();
         } catch(err){
             req.user = null;
             next();
         }
 
-        next();
     }
 }
 

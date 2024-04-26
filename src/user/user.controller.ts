@@ -5,6 +5,8 @@ import { CreateUserDto } from "./dto/createUser.dto";
 // import { UserEntity } from "./user.entity";
 import { UserReponseInterface } from "./types/userResponse.interface";
 import { Request } from "express";
+import { ExpressRequest } from "@app/types/expressRequest.interface";
+import { LoginUserDto } from "./dto/loginUser.dto";
 
 
 @Controller()
@@ -20,9 +22,23 @@ export class UserController{
         return this.userService.buildUserResponse(user)
     }
 
+    
+    @Post('users/login') // login function operates on the same route as users and is a POST request
+    @UsePipes(new ValidationPipe())
+    async login(
+        @Body('user') loginDto: LoginUserDto
+    ): Promise<UserReponseInterface> { //returns the type that we registered with
+        console.log('loginDto', loginDto);
+        return 'Login' as any
+        /*const user = await this.userService.login(LoginUserDto)
+        return this.userService.buildUserResponse(user) //user type returns userEntity not userResponse because it automatically adds a token to the response
+        */
+    }
+
+
     @Get('user')
-    async currentUser(@Req() request: Request): Promise<UserReponseInterface>{
-        
+    async currentUser(@Req() request: ExpressRequest): Promise<UserReponseInterface>{
+        console.log('current user in controller', request.user)
         return 'currentUser' as any;
     }
 }  

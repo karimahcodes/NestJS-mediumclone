@@ -34,29 +34,44 @@ export class UserService {
         return await this.userRepository.save(newUser) //saves entity to the dB
     }
 
+    //create a method to get the User
+    async findById(id: number): Promise<UserEntity> {
+        return this.userRepository.findOne({ where: { id } })
+    }
+
+
+
     generateJwt(user: UserEntity): string {
-        return sign({
-            id: user.id,
-            username: user.username,
-            email: user.email
-        },
-        JWT_Secret,
-    );
+        return sign(
+            {
+                id: user.id,
+                username: user.username,
+                email: user.email,
+            },
+            JWT_Secret,
+        );
     }
 
 //JWT is a string so we want to return a type string
 
-    //build response for your front end
+    //build THE response for your front end
     buildUserResponse(user: UserEntity): UserReponseInterface {
         return{
             user: {
                 ...user,
                 token: this.generateJwt(user),
-                //sends back a user object with all of the properties of the original user object and adds a jwt token to the response body
-                //we want a password but it's been hashed (hashing is a type) so we must create a new data type in order to receive it with the userEntity object
             },
         };
     }
 }
 
-// Object.assign(newUser, createUserDto) takes in a newUser and overwrites it with a data transfer object that we've named createUserDto and assigned a property of CreateUserDto
+/* Object.assign(newUser, createUserDto) 
+    --takes in a newUser and overwrites it with a data transfer object that we've named createUserDto and assigned a property of CreateUserDto */
+
+/* buildUserResponse(user: UserEntity): UserReponseInterface { 
+    --we want a password but it's been hashed (hashing is a type) so we must create a new data type in order to receive it with the userEntity object */
+    
+
+/* return{ user: { ...user,token: this.generateJwt(user) 
+    --sends back a user object with all of the properties of the original user object and adds a jwt token to the response body */
+    
